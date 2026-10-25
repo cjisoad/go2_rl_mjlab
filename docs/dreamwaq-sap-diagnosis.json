@@ -1,0 +1,212 @@
+{
+  "date": "2026-10-24",
+  "problem": "DreamWaQ reward dominated by extreme body-frame vertical velocity penalty",
+  "confirmed_defect": "MuJoCo-Warp 3.5 SAP int32 work scan/cursor overflow for the original 10x20 terrain with 4096 worlds",
+  "original_representative_pose": {
+    "rows": 10,
+    "cols": 20,
+    "ngeom": 12580,
+    "sap_pairs_per_world": 3501218,
+    "pairs_for_4096": 14340988928,
+    "int32_max": 2147483647,
+    "int32_wrapped_total": 1456087040,
+    "safe_worlds_upper_bound": 613
+  },
+  "fixed_grid": [
+    5,
+    10
+  ],
+  "fixed_worlds": 4096,
+  "pose_independent_cursor_upper_bound": 1948921855,
+  "int32_max": 2147483647,
+  "tests_passed": 64,
+  "local_fixed_rollout": {
+    "num_envs": 1024,
+    "steps": 150,
+    "checkpoint": "server model_800.pt",
+    "body_vz_spike_threshold": 5,
+    "spike_records": 0
+  },
+  "limits": [
+    "Early corrected training does not establish convergence or real-robot performance.",
+    "The original process was not instrumented for individual contacts; contact loss is inferred from the confirmed integer overflow and same-scale recovery."
+  ],
+  "server_fixed_rollout": {
+    "queue_pid": 114720,
+    "task_pid": 114754,
+    "new_task": {
+      "task": "Unitree-Go2-DreamWaQ",
+      "max_iterations": 5000,
+      "num_envs": 4096,
+      "status": "running",
+      "completed_iterations": 116,
+      "started_at": "2026-10-24T15:12:09+00:00",
+      "log_file": "/mjlab/unitree_rl_mjlab/logs/sequence/queue_20261024_021137/Unitree-Go2-DreamWaQ.log",
+      "command": [
+        "/mjlab/envs/go2/bin/python",
+        "-u",
+        "/mjlab/unitree_rl_mjlab/scripts/train.py",
+        "Unitree-Go2-DreamWaQ",
+        "--agent.run-name",
+        "queue_20261024_021137",
+        "--agent.max-iterations",
+        "5000",
+        "--env.scene.num-envs",
+        "4096"
+      ],
+      "pid": 114754,
+      "last_message": "ETA: 02:45:19",
+      "experiment_dir": "/mjlab/unitree_rl_mjlab/logs/rsl_rl/go2_dreamwaq/2026-10-24_23-12-35_queue_20261024_021137",
+      "steps_per_second": 47756.0,
+      "reward": -0.02,
+      "reward_first_100_mean": -0.8194000000000001,
+      "reward_last_100_mean": -0.5153,
+      "reward_best": 0.0,
+      "episode_length": 80.89,
+      "eta": "02:45:19"
+    },
+    "completed_first_four_unchanged": true,
+    "task_order": [
+      "Unitree-Go2-Flat",
+      "Unitree-Go2-Rough",
+      "Unitree-Go2-Backflip-V1.6",
+      "Unitree-Go2-StandUp",
+      "Unitree-Go2-DreamWaQ",
+      "Unitree-Go2-AMP",
+      "Unitree-Go2-Quad-Pedipulation",
+      "Unitree-Go2-Biped-Pedipulation"
+    ],
+    "old_log_preserved": "/mjlab/unitree_rl_mjlab/logs/sequence/queue_20261024_021137/Unitree-Go2-DreamWaQ.before-sap-fix.log",
+    "old_models_preserved": "/mjlab/unitree_rl_mjlab/logs/rsl_rl/go2_dreamwaq/2026-10-24_20-47-04_queue_20261024_021137",
+    "new_actual_config": [
+      "num_envs: 4096",
+      "num_rows: 5",
+      "num_cols: 10",
+      "max_init_terrain_level: 0",
+      "num_envs: 4096"
+    ],
+    "old_samples": [
+      {
+        "iteration": 0,
+        "reward": -3.14,
+        "episode_steps": 17.31,
+        "linear_z": -0.0766,
+        "steps_per_second": 9722.0
+      },
+      {
+        "iteration": 1,
+        "reward": -15.54,
+        "episode_steps": 28.61,
+        "linear_z": -0.5372,
+        "steps_per_second": 12276.0
+      },
+      {
+        "iteration": 2,
+        "reward": -76.96,
+        "episode_steps": 47.66,
+        "linear_z": -2.4846,
+        "steps_per_second": 12203.0
+      },
+      {
+        "iteration": 5,
+        "reward": -837.29,
+        "episode_steps": 117.91,
+        "linear_z": -33.0806,
+        "steps_per_second": 12310.0
+      },
+      {
+        "iteration": 10,
+        "reward": -2211.4,
+        "episode_steps": 142.01,
+        "linear_z": -118.5761,
+        "steps_per_second": 12313.0
+      },
+      {
+        "iteration": 25,
+        "reward": -4646.01,
+        "episode_steps": 156.84,
+        "linear_z": -245.0242,
+        "steps_per_second": 12219.0
+      },
+      {
+        "iteration": 50,
+        "reward": -1683.15,
+        "episode_steps": 99.58,
+        "linear_z": -112.5776,
+        "steps_per_second": 12204.0
+      },
+      {
+        "iteration": 1039,
+        "reward": -6039.77,
+        "episode_steps": 137.86,
+        "linear_z": -193.0984,
+        "steps_per_second": 12245.0
+      }
+    ],
+    "new_samples": [
+      {
+        "iteration": 0,
+        "reward": -1.88,
+        "episode_steps": 18.02,
+        "linear_z": -0.0146,
+        "steps_per_second": 24399.0
+      },
+      {
+        "iteration": 1,
+        "reward": -2.66,
+        "episode_steps": 27.48,
+        "linear_z": -0.0218,
+        "steps_per_second": 50242.0
+      },
+      {
+        "iteration": 2,
+        "reward": -2.55,
+        "episode_steps": 27.05,
+        "linear_z": -0.0223,
+        "steps_per_second": 50288.0
+      },
+      {
+        "iteration": 5,
+        "reward": -2.73,
+        "episode_steps": 34.29,
+        "linear_z": -0.0235,
+        "steps_per_second": 49027.0
+      },
+      {
+        "iteration": 10,
+        "reward": -1.26,
+        "episode_steps": 14.68,
+        "linear_z": -0.0218,
+        "steps_per_second": 48066.0
+      },
+      {
+        "iteration": 25,
+        "reward": -0.9,
+        "episode_steps": 11.42,
+        "linear_z": -0.0175,
+        "steps_per_second": 49355.0
+      },
+      {
+        "iteration": 50,
+        "reward": -0.6,
+        "episode_steps": 11.4,
+        "linear_z": -0.0149,
+        "steps_per_second": 48169.0
+      },
+      {
+        "iteration": 115,
+        "reward": -0.02,
+        "episode_steps": 80.89,
+        "linear_z": -0.007,
+        "steps_per_second": 47756.0
+      }
+    ],
+    "remote_unit_tests_passed": 64,
+    "local_unit_tests_passed": 64,
+    "checkpoints": [
+      "model_0.pt",
+      "model_100.pt",
+      "model_50.pt"
+    ]
+  }
+}

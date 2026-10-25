@@ -1,0 +1,8 @@
+{
+  "source_clip": "ai4_dog_walk_01",
+  "source_start_frame": 276,
+  "source_frame_count": 1072,
+  "output_frame_count": 796,
+  "max_abs_roll_pitch_deg": 15.0,
+  "stable_window_frames": 60
+}

@@ -1,0 +1,9 @@
+{
+  "source_clip": "ai4_dog_synth_square_walk",
+  "source_start_frame": 0,
+  "source_frame_count": 1116,
+  "output_frame_count": 1116,
+  "max_abs_roll_pitch_deg": 15.0,
+  "stable_window_frames": 60,
+  "min_root_height": null
+}

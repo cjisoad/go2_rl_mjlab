@@ -1,0 +1,9 @@
+# Long strip terrain for keyboard play
+
+User-approved design: a 62 m by 10 m fixed strip, with a 6 m flat start and all seven original terrain types as 8 m sections. Use each task's own terrain parameters: Rough, DreamWaQ and Quad Pedipulation. Training remains unchanged. Keyboard mode defaults to the strip for generated terrain; `--play-terrain original` restores the original map, and `--play-terrain strip` explicitly selects the strip. Flat/AMP/StandUp/Biped/Backflip keep their flat ground in auto mode.
+
+Compose one SubTerrainCfg from the existing native section functions. Generate every type exactly once in dictionary order, independent of probability weights. Default seed 42 and fixed medium difficulty 0.55. Terrain corners span X [-31,31], Y [-5,5]; spawn at (-28,0) facing +X. Keep native border surfaces so adjacent section boundaries join at height zero. Do not place a full-strip plane at zero because it would fill inverted stairs/slopes. Add a narrow 1 m outer flat safety border. Preserve actor height-scan inputs, robot physics and policy dimensions. Remove terrain randomization/curriculum during strip play; use a one-hour episode to traverse the course, retaining fall termination.
+
+Keyboard defaults disable shadows, reflections and debug markers; R toggles debug when deliberately requested. The custom input window continues to suppress MuJoCo built-in shortcuts. Print the ordered strip sections and current section in the viewer so position along the course is clear.
+
+Verify real geometry and downward rays at section boundaries, fixed origins/yaw, deterministic heights and no changes to training factories. Load the downloaded Rough/DreamWaQ/Quad policies in CUDA and measure full viewer frame times against the saved original-map baseline. Be explicit if the new display still falls short of real time.

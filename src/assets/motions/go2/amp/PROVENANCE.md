@@ -1,0 +1,3 @@
+The ten .npy demonstrations and matching JSON metadata are copied unchanged from the supplied unitree_rl_lab/data/amp/go2_kine2go_walk source snapshot. The original clip identifiers, stable-window metadata and sampling weights are retained. Six recorded walks have weight 1; four synthetic paths have weight 0.5. No runtime download is required.
+
+The supplied partial snapshot has no dataset-specific or project-root license file. No new license is asserted for the demonstration data. Preserve the originating repository's license and any upstream motion-data terms when redistributing. The BSD-3-Clause license in src/tasks/go2/amp/LICENSE covers the copied amp-rsl-rl loader, replay and discriminator source, not an independent license grant for motion data.

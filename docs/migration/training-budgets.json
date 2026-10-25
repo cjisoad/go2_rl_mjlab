@@ -1,0 +1,396 @@
+{
+  "analysis_date": "2026-10-24",
+  "remote_access": "disabled_after_user_reported_server_shutdown",
+  "scope": "cached_source_and_run_parameters_only",
+  "plateau_confirmed": false,
+  "reason": "No cached TensorBoard event/scalar files. Run configuration budgets are not evidence of convergence.",
+  "tasks": [
+    {
+      "task": "Unitree-Go2-DreamWaQ",
+      "recommended_max_iterations": 5000,
+      "num_steps_per_env": 24,
+      "recommendation_basis": "user_requested_override",
+      "plateau_confirmed": false,
+      "plateau_iteration": null,
+      "source": {
+        "path": "/home/ubun/unitree/unitree_rl_lab/source/unitree_rl_lab/unitree_rl_lab/tasks/locomotion/agents/go2_dreamwaq_cfg.py",
+        "sha256": "b62c127a190c814e7cca49ff23726ffd803f4894e6c07d3c05e5bbf6b87f42cd",
+        "fields": {
+          "num_steps_per_env": {
+            "value": 24,
+            "line": 46
+          },
+          "max_iterations": {
+            "value": 50000,
+            "line": 47
+          },
+          "experiment_name": {
+            "value": "unitree_go2_rough_dreamwaq",
+            "line": 49
+          }
+        },
+        "location_kind": "historical_remote_source_identifier"
+      }
+    },
+    {
+      "task": "Unitree-Go2-AMP",
+      "recommended_max_iterations": 10000,
+      "num_steps_per_env": 24,
+      "recommendation_basis": "user_requested_override",
+      "plateau_confirmed": false,
+      "plateau_iteration": null,
+      "source": {
+        "path": "/home/ubun/unitree/unitree_rl_lab/source/unitree_rl_lab/unitree_rl_lab/tasks/locomotion/agents/go2_amp_cfg.py",
+        "sha256": "a226ede6df897629f91c08d7709ce54043f091860dd1110f45343875e5b76ed7",
+        "fields": {
+          "num_steps_per_env": {
+            "value": 24,
+            "line": 55
+          },
+          "max_iterations": {
+            "value": 50000,
+            "line": 56
+          },
+          "experiment_name": {
+            "value": "unitree_go2_amp",
+            "line": 58
+          }
+        },
+        "location_kind": "historical_remote_source_identifier"
+      }
+    },
+    {
+      "task": "Unitree-Go2-StandUp",
+      "recommended_max_iterations": 6000,
+      "num_steps_per_env": 24,
+      "recommendation_basis": "cached_remote_source_v21",
+      "plateau_confirmed": false,
+      "plateau_iteration": null,
+      "source": {
+        "path": "/home/ubun/unitree/unitree_rl_lab/source/unitree_rl_lab/unitree_rl_lab/tasks/locomotion/agents/go2_standup_v21_cfg.py",
+        "sha256": "3b162d76f7ce866acfd14d69e76794f1871e97da78f158f38387d561571aff60",
+        "fields": {
+          "max_iterations": {
+            "value": 6000,
+            "line": 8
+          },
+          "experiment_name": {
+            "value": "unitree_go2_standup_v21",
+            "line": 9
+          }
+        },
+        "location_kind": "historical_remote_source_identifier"
+      }
+    },
+    {
+      "task": "Unitree-Go2-Backflip-V1.6",
+      "recommended_max_iterations": 1000,
+      "num_steps_per_env": 24,
+      "recommendation_basis": "cached_remote_source_and_v16_run_params",
+      "plateau_confirmed": false,
+      "plateau_iteration": null,
+      "source": {
+        "path": "/home/ubun/unitree/unitree_rl_lab/source/unitree_rl_lab/unitree_rl_lab/tasks/locomotion/agents/go2_backflip_cfg.py",
+        "sha256": "3566c1f295f149b20bdb62a1206358b169ec6974c1ecc3e98be4e4e1281e78b9",
+        "fields": {
+          "num_steps_per_env": {
+            "value": 24,
+            "line": 12
+          },
+          "max_iterations": {
+            "value": 1000,
+            "line": 13
+          },
+          "experiment_name": {
+            "value": "unitree_go2_backflip",
+            "line": 15
+          }
+        },
+        "location_kind": "historical_remote_source_identifier"
+      }
+    },
+    {
+      "task": "Unitree-Go2-Flat",
+      "recommended_max_iterations": 2000,
+      "num_steps_per_env": 24,
+      "recommendation_basis": "user_requested_override",
+      "plateau_confirmed": false,
+      "plateau_iteration": null,
+      "source": {
+        "path": "src/tasks/velocity/config/go2/rl_cfg.py",
+        "sha256": "d57e5b74fc8979e0bb4211b6cf24d5aeae9e0050922edda683e9e00395e9a3f7",
+        "fields": {
+          "experiment_name": {
+            "value": "go2_velocity",
+            "line": 42
+          },
+          "num_steps_per_env": {
+            "value": 24,
+            "line": 45
+          },
+          "max_iterations": {
+            "value": 10001,
+            "line": 46
+          }
+        },
+        "location_kind": "target_repository_relative"
+      }
+    },
+    {
+      "task": "Unitree-Go2-Rough",
+      "recommended_max_iterations": 3000,
+      "num_steps_per_env": 24,
+      "recommendation_basis": "user_requested_override",
+      "plateau_confirmed": false,
+      "plateau_iteration": null,
+      "source": {
+        "path": "src/tasks/velocity/config/go2/rl_cfg.py",
+        "sha256": "d57e5b74fc8979e0bb4211b6cf24d5aeae9e0050922edda683e9e00395e9a3f7",
+        "fields": {
+          "experiment_name": {
+            "value": "go2_velocity",
+            "line": 42
+          },
+          "num_steps_per_env": {
+            "value": 24,
+            "line": 45
+          },
+          "max_iterations": {
+            "value": 10001,
+            "line": 46
+          }
+        },
+        "location_kind": "target_repository_relative"
+      }
+    },
+    {
+      "task": "Unitree-G1-Tracking",
+      "recommended_max_iterations": 30001,
+      "num_steps_per_env": 24,
+      "recommendation_basis": "retained_local_default",
+      "plateau_confirmed": false,
+      "plateau_iteration": null,
+      "source": {
+        "path": "src/tasks/tracking/config/g1/rl_cfg.py",
+        "sha256": "0599b458fb313edfe68a21e3f3543aea5510c4ce89026548d7e89dea71f2f082",
+        "fields": {
+          "experiment_name": {
+            "value": "g1_tracking",
+            "line": 42
+          },
+          "num_steps_per_env": {
+            "value": 24,
+            "line": 45
+          },
+          "max_iterations": {
+            "value": 30001,
+            "line": 46
+          }
+        },
+        "location_kind": "target_repository_relative"
+      }
+    },
+    {
+      "task": "Unitree-G1-Tracking-No-State-Estimation",
+      "recommended_max_iterations": 30001,
+      "num_steps_per_env": 24,
+      "recommendation_basis": "retained_local_default",
+      "plateau_confirmed": false,
+      "plateau_iteration": null,
+      "source": {
+        "path": "src/tasks/tracking/config/g1/rl_cfg.py",
+        "sha256": "0599b458fb313edfe68a21e3f3543aea5510c4ce89026548d7e89dea71f2f082",
+        "fields": {
+          "experiment_name": {
+            "value": "g1_tracking",
+            "line": 42
+          },
+          "num_steps_per_env": {
+            "value": 24,
+            "line": 45
+          },
+          "max_iterations": {
+            "value": 30001,
+            "line": 46
+          }
+        },
+        "location_kind": "target_repository_relative"
+      }
+    },
+    {
+      "task": "Unitree-G1-23Dof-Tracking",
+      "recommended_max_iterations": 30001,
+      "num_steps_per_env": 24,
+      "recommendation_basis": "retained_local_default",
+      "plateau_confirmed": false,
+      "plateau_iteration": null,
+      "source": {
+        "path": "src/tasks/tracking/config/g1_23dof/rl_cfg.py",
+        "sha256": "514b1093ba8b4c653f500c4ac2119ebc1b110d05559b0688f03883aadae5b4f3",
+        "fields": {
+          "experiment_name": {
+            "value": "g1_23dof_tracking",
+            "line": 42
+          },
+          "num_steps_per_env": {
+            "value": 24,
+            "line": 45
+          },
+          "max_iterations": {
+            "value": 30001,
+            "line": 46
+          }
+        },
+        "location_kind": "target_repository_relative"
+      }
+    },
+    {
+      "task": "Unitree-G1-23Dof-Tracking-No-State-Estimation",
+      "recommended_max_iterations": 30001,
+      "num_steps_per_env": 24,
+      "recommendation_basis": "retained_local_default",
+      "plateau_confirmed": false,
+      "plateau_iteration": null,
+      "source": {
+        "path": "src/tasks/tracking/config/g1_23dof/rl_cfg.py",
+        "sha256": "514b1093ba8b4c653f500c4ac2119ebc1b110d05559b0688f03883aadae5b4f3",
+        "fields": {
+          "experiment_name": {
+            "value": "g1_23dof_tracking",
+            "line": 42
+          },
+          "num_steps_per_env": {
+            "value": 24,
+            "line": 45
+          },
+          "max_iterations": {
+            "value": 30001,
+            "line": 46
+          }
+        },
+        "location_kind": "target_repository_relative"
+      }
+    }
+  ],
+  "cached_training_runs": [
+    {
+      "path": "/home/ubun/unitree/unitree_rl_lab/logs/rsl_rl/unitree_go2_backflip/2026-07-04_19-42-18_backflip_pitch_progress_v1.6/params/agent.yaml",
+      "sha256": "62fc87488f15f4674cf8b3f31766b0724246a21cf60f72aafcf49bf48a126db9",
+      "fields": {
+        "num_steps_per_env": {
+          "value": "24",
+          "line": 3
+        },
+        "max_iterations": {
+          "value": "1000",
+          "line": 4
+        },
+        "run_name": {
+          "value": "backflip_pitch_progress_v1.6",
+          "line": 11
+        },
+        "resume": {
+          "value": "false",
+          "line": 15
+        }
+      },
+      "observed_scalar_points": 0,
+      "location_kind": "historical_remote_run_identifier"
+    },
+    {
+      "path": "/home/ubun/unitree/unitree_rl_lab/logs/rsl_rl/unitree_go2_backflip/2026-07-04_21-28-58_backflip_pitch_progress_v1.6/params/agent.yaml",
+      "sha256": "62fc87488f15f4674cf8b3f31766b0724246a21cf60f72aafcf49bf48a126db9",
+      "fields": {
+        "num_steps_per_env": {
+          "value": "24",
+          "line": 3
+        },
+        "max_iterations": {
+          "value": "1000",
+          "line": 4
+        },
+        "run_name": {
+          "value": "backflip_pitch_progress_v1.6",
+          "line": 11
+        },
+        "resume": {
+          "value": "false",
+          "line": 15
+        }
+      },
+      "observed_scalar_points": 0,
+      "location_kind": "historical_remote_run_identifier"
+    },
+    {
+      "path": "/home/ubun/unitree/unitree_rl_lab/logs/rsl_rl/unitree_go2_backflip/2026-07-04_23-21-24_backflip_pitch_progress_v1.6/params/agent.yaml",
+      "sha256": "62fc87488f15f4674cf8b3f31766b0724246a21cf60f72aafcf49bf48a126db9",
+      "fields": {
+        "num_steps_per_env": {
+          "value": "24",
+          "line": 3
+        },
+        "max_iterations": {
+          "value": "1000",
+          "line": 4
+        },
+        "run_name": {
+          "value": "backflip_pitch_progress_v1.6",
+          "line": 11
+        },
+        "resume": {
+          "value": "false",
+          "line": 15
+        }
+      },
+      "observed_scalar_points": 0,
+      "location_kind": "historical_remote_run_identifier"
+    }
+  ],
+  "cached_remote_event_file_count": 0,
+  "physics_backend": "Source Isaac Lab -> target mjlab; same iteration budget does not establish equal convergence.",
+  "source_manifest": "source-manifest.json",
+  "source_path_note": "Remote absolute paths identify captured provenance; they are not links to files bundled with this repository. Relative paths identify target repository files. Hashes of captured inputs appear in source-manifest.json.",
+  "user_requested_overrides": {
+    "Unitree-Go2-DreamWaQ": {
+      "max_iterations": 5000,
+      "source_default": 50000
+    },
+    "Unitree-Go2-AMP": {
+      "max_iterations": 10000,
+      "source_default": 50000
+    },
+    "Unitree-Go2-Flat": {
+      "max_iterations": 2000
+    },
+    "Unitree-Go2-Rough": {
+      "max_iterations": 3000
+    }
+  },
+  "user_requested_num_envs": {
+    "Unitree-Go2-Flat": {
+      "num_envs": 4096,
+      "scope": "training"
+    },
+    "Unitree-Go2-Rough": {
+      "num_envs": 4096,
+      "scope": "training"
+    },
+    "Unitree-Go2-DreamWaQ": {
+      "num_envs": 4096,
+      "scope": "training"
+    },
+    "Unitree-Go2-AMP": {
+      "num_envs": 2048,
+      "scope": "training",
+      "basis": "restored_previous_task_default_at_user_request"
+    },
+    "Unitree-Go2-StandUp": {
+      "num_envs": 4096,
+      "scope": "training"
+    },
+    "Unitree-Go2-Backflip-V1.6": {
+      "num_envs": 4096,
+      "scope": "training"
+    }
+  }
+}

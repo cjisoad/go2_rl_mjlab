@@ -1,0 +1,9 @@
+{
+  "source_clip": "ai4_dog_synth_ellipse_walk",
+  "source_start_frame": 0,
+  "source_frame_count": 1179,
+  "output_frame_count": 1179,
+  "max_abs_roll_pitch_deg": 15.0,
+  "stable_window_frames": 60,
+  "min_root_height": null
+}

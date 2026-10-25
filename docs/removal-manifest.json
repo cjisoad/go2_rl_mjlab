@@ -1,0 +1,17 @@
+[
+  "deploy",
+  "simulate",
+  "doc",
+  "src/assets/robots/unitree_a2",
+  "src/assets/robots/unitree_as2",
+  "src/assets/robots/unitree_h1_2",
+  "src/assets/robots/unitree_h2",
+  "src/assets/robots/unitree_r1",
+  "src/tasks/velocity/config/a2",
+  "src/tasks/velocity/config/as2",
+  "src/tasks/velocity/config/g1",
+  "src/tasks/velocity/config/g1_23dof",
+  "src/tasks/velocity/config/h1_2",
+  "src/tasks/velocity/config/h2",
+  "src/tasks/velocity/config/r1"
+]

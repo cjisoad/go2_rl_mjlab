@@ -24,6 +24,7 @@ def unitree_go2_rough_env_cfg(
 ) -> ManagerBasedRlEnvCfg:
   """Create Unitree Go2 rough terrain velocity configuration."""
   cfg = make_velocity_env_cfg()
+  cfg.scene.num_envs = 1 if play else 4096
 
   cfg.sim.mujoco.ccd_iterations = 500
   cfg.sim.contact_sensor_maxmatch = 500

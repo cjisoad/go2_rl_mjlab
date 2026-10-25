@@ -1,0 +1,295 @@
+{
+  "date": "2026-10-24",
+  "environment": {
+    "os": "WSL2 Ubuntu 22.04",
+    "conda": "cjisoad_mjlab",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU 8GB",
+    "mjlab": "1.2.0",
+    "mujoco_warp": "3.5.0",
+    "rsl_rl": "5.0.1",
+    "torch": "2.8.0"
+  },
+  "cpu": {
+    "command": "PYTHONPATH=\"$PWD\" python -m unittest discover -s tests",
+    "tests": 45,
+    "passed": true
+  },
+  "static": {
+    "compileall": true,
+    "ruff_E9_F821": true,
+    "git_diff_check": true
+  },
+  "packaging": {
+    "wheel_build": true,
+    "required_assets_and_licenses": true,
+    "no_bytecode": true,
+    "wheel_files": 164
+  },
+  "train_cli": {
+    "task": "Unitree-Go2-AMP",
+    "num_envs": 4,
+    "iterations": 1,
+    "passed": true
+  },
+  "tracking_conversion": {
+    "robots": [
+      "g1",
+      "g1_23dof"
+    ],
+    "input_frames": 15,
+    "output_frames": 24,
+    "passed": true
+  },
+  "cuda": [
+    {
+      "task": "Unitree-G1-Tracking",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 66,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          160
+        ],
+        "critic": [
+          4,
+          286
+        ]
+      },
+      "default_max_iterations": 30001
+    },
+    {
+      "task": "Unitree-G1-Tracking-No-State-Estimation",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 68,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          154
+        ],
+        "critic": [
+          4,
+          286
+        ]
+      },
+      "default_max_iterations": 30001
+    },
+    {
+      "task": "Unitree-G1-23Dof-Tracking",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 4,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          130
+        ],
+        "critic": [
+          4,
+          256
+        ]
+      },
+      "default_max_iterations": 30001
+    },
+    {
+      "task": "Unitree-G1-23Dof-Tracking-No-State-Estimation",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 4,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          124
+        ],
+        "critic": [
+          4,
+          256
+        ]
+      },
+      "default_max_iterations": 30001
+    },
+    {
+      "task": "Unitree-Go2-Flat",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 9,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          47
+        ],
+        "critic": [
+          4,
+          74
+        ]
+      },
+      "default_max_iterations": 10001
+    },
+    {
+      "task": "Unitree-Go2-Rough",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 9,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          234
+        ],
+        "critic": [
+          4,
+          261
+        ]
+      },
+      "default_max_iterations": 10001
+    },
+    {
+      "task": "Unitree-Go2-DreamWaQ",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 0,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          45
+        ],
+        "obs_history": [
+          4,
+          225
+        ],
+        "privileged": [
+          4,
+          202
+        ]
+      },
+      "default_max_iterations": 50000
+    },
+    {
+      "task": "Unitree-Go2-AMP",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 0,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          45
+        ],
+        "critic": [
+          4,
+          60
+        ],
+        "amp": [
+          4,
+          30
+        ]
+      },
+      "default_max_iterations": 50000
+    },
+    {
+      "task": "Unitree-Go2-StandUp",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 0,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          45
+        ],
+        "critic": [
+          4,
+          86
+        ]
+      },
+      "default_max_iterations": 6000
+    },
+    {
+      "task": "Unitree-Go2-Backflip-V1.6",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 4,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          60
+        ],
+        "critic": [
+          4,
+          64
+        ]
+      },
+      "default_max_iterations": 1000
+    }
+  ],
+  "limitations": [
+    "Short smoke training does not establish motion quality or convergence.",
+    "No remote TensorBoard curves were retrieved; no plateau is confirmed.",
+    "Default large training environment counts were not benchmarked on 8GB GPU.",
+    "MuJoCo contacts and material mixing differ from Isaac Lab/PhysX."
+  ],
+  "current_default_max_iterations": {
+    "Unitree-Go2-DreamWaQ": 5000,
+    "Unitree-Go2-AMP": 10000,
+    "Unitree-Go2-Flat": 2000,
+    "Unitree-Go2-Rough": 3000
+  },
+  "current_default_num_envs": {
+    "Unitree-Go2-Flat": 4096,
+    "Unitree-Go2-Rough": 4096,
+    "Unitree-Go2-DreamWaQ": 4096,
+    "Unitree-Go2-AMP": 2048,
+    "Unitree-Go2-StandUp": 4096,
+    "Unitree-Go2-Backflip-V1.6": 4096
+  },
+  "validation_note": "CPU/CUDA smoke checks predate the requested default budget and environment-count updates. Smoke jobs explicitly used four environments and two PPO updates.",
+  "current_default_num_envs_note": "AMP was restored to its previous 2048 training environments at the user request."
+}

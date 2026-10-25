@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-24",
+  "platform": "WSL Ubuntu 22.04, cjisoad_mjlab conda environment",
+  "unit_tests": 59,
+  "unit_tests_passed": true,
+  "ruff_check": true,
+  "git_diff_check": true,
+  "gpu_smoke": [
+    {
+      "task": "Unitree-Go2-Quad-Pedipulation",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 0,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          48
+        ],
+        "obs_history": [
+          4,
+          240
+        ],
+        "privileged": [
+          4,
+          202
+        ]
+      }
+    },
+    {
+      "task": "Unitree-Go2-Biped-Pedipulation",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 0,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          48
+        ],
+        "critic": [
+          4,
+          89
+        ]
+      }
+    },
+    {
+      "task": "Unitree-Go2-DreamWaQ",
+      "num_envs": 4,
+      "zero_action_steps": 110,
+      "natural_resets": 1,
+      "timeout_reset": true,
+      "training_iterations": 2,
+      "steps_per_iteration": 24,
+      "checkpoint_roundtrip": true,
+      "onnx_valid": true,
+      "observations": {
+        "actor": [
+          4,
+          45
+        ],
+        "obs_history": [
+          4,
+          225
+        ],
+        "privileged": [
+          4,
+          202
+        ]
+      }
+    }
+  ],
+  "full_command_cycles": {
+    "Quad": true,
+    "Biped": true
+  },
+  "limits": [
+    "Short tests verify implementation and numeric stability, not convergence or real-robot performance.",
+    "New tasks implemented and tested locally; existing remote training queue not modified."
+  ]
+}

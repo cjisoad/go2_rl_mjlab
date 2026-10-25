@@ -7,7 +7,7 @@ from mjlab.rl import (
 )
 
 
-def unitree_go2_ppo_runner_cfg() -> RslRlOnPolicyRunnerCfg:
+def unitree_go2_ppo_runner_cfg(max_iterations: int = 10001) -> RslRlOnPolicyRunnerCfg:
   """Create RL runner configuration for Unitree Go2 velocity task."""
   return RslRlOnPolicyRunnerCfg(
     actor=RslRlModelCfg(
@@ -40,7 +40,8 @@ def unitree_go2_ppo_runner_cfg() -> RslRlOnPolicyRunnerCfg:
       max_grad_norm=1.0,
     ),
     experiment_name="go2_velocity",
+    logger="tensorboard",
     save_interval=100,
     num_steps_per_env=24,
-    max_iterations=10001,
+    max_iterations=max_iterations,
   )
