@@ -49,27 +49,27 @@ These are mjlab implementations/adaptations; existing Isaac Lab checkpoints are 
 
 ## Training results
 
-Simulation rollouts of the trained policies. Click a preview to open its video. The full-length demonstration copies use H.264 encoding; the original recordings are unchanged. Videos currently cover the five tasks below.
+Simulation rollouts of the trained policies, shown as automatically looping GIFs. Demonstrations currently cover the five tasks below.
 
 **Flat**
 
-[![Flat](docs/media/go2_flat.jpg)](docs/media/go2_flat.mp4)
+![Flat](docs/media/go2_flat.gif)
 
 **Rough**
 
-[![Rough](docs/media/go2_rough.jpg)](docs/media/go2_rough.mp4)
+![Rough](docs/media/go2_rough.gif)
 
 **DreamWaQ**
 
-[![DreamWaQ](docs/media/go2_dreamwaq.jpg)](docs/media/go2_dreamwaq.mp4)
+![DreamWaQ](docs/media/go2_dreamwaq.gif)
 
 **AMP**
 
-[![AMP](docs/media/go2_AMP.jpg)](docs/media/go2_AMP.mp4)
+![AMP](docs/media/go2_AMP.gif)
 
 **StandUp**
 
-[![StandUp](docs/media/go2_standup.jpg)](docs/media/go2_standup.mp4)
+![StandUp](docs/media/go2_standup.gif)
 
 ## Start training
 

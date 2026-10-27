@@ -49,27 +49,27 @@ python scripts/list_envs.py
 
 ## 训练效果
 
-以下为训练后策略在仿真中的演示，点击封面打开视频。仓库内为保留完整时长的 H.264 展示副本，原始录像保持不变。目前提供以下五个任务的视频。
+以下为训练后策略在仿真中的演示，以 GIF 动图自动循环播放。目前展示以下五个任务。
 
 **Flat**
 
-[![Flat](docs/media/go2_flat.jpg)](docs/media/go2_flat.mp4)
+![Flat](docs/media/go2_flat.gif)
 
 **Rough**
 
-[![Rough](docs/media/go2_rough.jpg)](docs/media/go2_rough.mp4)
+![Rough](docs/media/go2_rough.gif)
 
 **DreamWaQ**
 
-[![DreamWaQ](docs/media/go2_dreamwaq.jpg)](docs/media/go2_dreamwaq.mp4)
+![DreamWaQ](docs/media/go2_dreamwaq.gif)
 
 **AMP**
 
-[![AMP](docs/media/go2_AMP.jpg)](docs/media/go2_AMP.mp4)
+![AMP](docs/media/go2_AMP.gif)
 
 **StandUp**
 
-[![StandUp](docs/media/go2_standup.jpg)](docs/media/go2_standup.mp4)
+![StandUp](docs/media/go2_standup.gif)
 
 ## 启动训练
 
