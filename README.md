@@ -4,6 +4,30 @@
 
 A reinforcement learning training repository for **Unitree Go2**, built on **mjlab**, **MuJoCo Warp** and **RSL-RL**. It integrates locomotion, motion priors, bipedal standing, backflips and right-front-foot manipulation. The original G1 motion-tracking tasks are also retained.
 
+## Training results
+
+Simulation rollouts of the trained policies, shown as automatically looping GIFs. Demonstrations currently cover the five tasks below.
+
+**Flat**
+
+![Flat](docs/media/go2_flat.gif)
+
+**Rough**
+
+![Rough](docs/media/go2_rough.gif)
+
+**DreamWaQ**
+
+![DreamWaQ](docs/media/go2_dreamwaq.gif)
+
+**AMP**
+
+![AMP](docs/media/go2_AMP.gif)
+
+**StandUp**
+
+![StandUp](docs/media/go2_standup.gif)
+
 ## Environment requirements
 
 | Component | Tested configuration |
@@ -46,30 +70,6 @@ Dependency versions are pinned in [requirements-training.txt](requirements-train
 The two pedipulation tasks use a six-dimensional command: body velocity `(vx, vy, yaw_rate)` plus the right-front-foot target position `(x, y, z)` in the body frame. Actor observations do not require measured ground-truth foot positions or contact forces. See [task design](docs/pedipulation.md) for observations and rewards.
 
 These are mjlab implementations/adaptations; existing Isaac Lab checkpoints are not interchangeable. G1 tracking remains available through `python scripts/list_envs.py` and requires a separately supplied motion `.npz` file.
-
-## Training results
-
-Simulation rollouts of the trained policies, shown as automatically looping GIFs. Demonstrations currently cover the five tasks below.
-
-**Flat**
-
-![Flat](docs/media/go2_flat.gif)
-
-**Rough**
-
-![Rough](docs/media/go2_rough.gif)
-
-**DreamWaQ**
-
-![DreamWaQ](docs/media/go2_dreamwaq.gif)
-
-**AMP**
-
-![AMP](docs/media/go2_AMP.gif)
-
-**StandUp**
-
-![StandUp](docs/media/go2_standup.gif)
 
 ## Start training
 

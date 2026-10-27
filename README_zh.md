@@ -4,6 +4,30 @@
 
 基于 **mjlab**、**MuJoCo Warp** 和 **RSL-RL** 的 **Unitree Go2 强化学习训练仓库**，集成行走、运动先验、双足站立、后空翻和右前腿操作任务，同时保留原有 G1 动作跟踪代码。
 
+## 训练效果
+
+以下为训练后策略在仿真中的演示，以 GIF 动图自动循环播放。目前展示以下五个任务。
+
+**Flat**
+
+![Flat](docs/media/go2_flat.gif)
+
+**Rough**
+
+![Rough](docs/media/go2_rough.gif)
+
+**DreamWaQ**
+
+![DreamWaQ](docs/media/go2_dreamwaq.gif)
+
+**AMP**
+
+![AMP](docs/media/go2_AMP.gif)
+
+**StandUp**
+
+![StandUp](docs/media/go2_standup.gif)
+
 ## 环境要求
 
 | 组件 | 已验证配置 |
@@ -46,30 +70,6 @@ python scripts/list_envs.py
 两个 Pedipulation 任务均使用六维命令：机身速度 `(vx, vy, yaw_rate)` 加机身坐标系下右前脚目标位置 `(x, y, z)`。Actor 观测不依赖脚端真实位置或接触力测量。观测与奖励设计见 [右前腿操作任务说明](docs/pedipulation.md)。
 
 这些方法已实现或适配到 mjlab，不能直接使用 Isaac Lab 的策略检查点。保留的 G1 Tracking 任务可通过 `python scripts/list_envs.py` 查看，训练时需另外提供动作 `.npz` 文件。
-
-## 训练效果
-
-以下为训练后策略在仿真中的演示，以 GIF 动图自动循环播放。目前展示以下五个任务。
-
-**Flat**
-
-![Flat](docs/media/go2_flat.gif)
-
-**Rough**
-
-![Rough](docs/media/go2_rough.gif)
-
-**DreamWaQ**
-
-![DreamWaQ](docs/media/go2_dreamwaq.gif)
-
-**AMP**
-
-![AMP](docs/media/go2_AMP.gif)
-
-**StandUp**
-
-![StandUp](docs/media/go2_standup.gif)
 
 ## 启动训练
 
