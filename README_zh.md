@@ -6,27 +6,9 @@
 
 ## 训练效果
 
-以下为训练后策略在仿真中的演示，以 GIF 动图自动循环播放。目前展示以下五个任务。
+以下动图展示五个训练后策略的仿真效果：Flat、Rough、DreamWaQ、AMP 和 StandUp。
 
-**Flat**
-
-![Flat](docs/media/go2_flat.gif)
-
-**Rough**
-
-![Rough](docs/media/go2_rough.gif)
-
-**DreamWaQ**
-
-![DreamWaQ](docs/media/go2_dreamwaq.gif)
-
-**AMP**
-
-![AMP](docs/media/go2_AMP.gif)
-
-**StandUp**
-
-![StandUp](docs/media/go2_standup.gif)
+![Go2 policy demonstrations](docs/media/go2_demo_grid.gif)
 
 ## 环境要求
 

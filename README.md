@@ -6,27 +6,9 @@ A reinforcement learning training repository for **Unitree Go2**, built on **mjl
 
 ## Training results
 
-Simulation rollouts of the trained policies, shown as automatically looping GIFs. Demonstrations currently cover the five tasks below.
+Simulation rollouts of five trained policies: Flat, Rough, DreamWaQ, AMP and StandUp.
 
-**Flat**
-
-![Flat](docs/media/go2_flat.gif)
-
-**Rough**
-
-![Rough](docs/media/go2_rough.gif)
-
-**DreamWaQ**
-
-![DreamWaQ](docs/media/go2_dreamwaq.gif)
-
-**AMP**
-
-![AMP](docs/media/go2_AMP.gif)
-
-**StandUp**
-
-![StandUp](docs/media/go2_standup.gif)
+![Go2 policy demonstrations](docs/media/go2_demo_grid.gif)
 
 ## Environment requirements
 
