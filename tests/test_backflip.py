@@ -1,9 +1,9 @@
 """Regression checks for archived V1.6 phase, pitch and contact semantics."""
 
 import importlib.util
+import unittest
 from pathlib import Path
 from types import SimpleNamespace
-import unittest
 
 import torch
 
@@ -18,6 +18,31 @@ def load_mdp():
 
 
 class BackflipTests(unittest.TestCase):
+    def test_orientation_tracks_negative_full_turn_over_progress_window(self):
+        mdp = load_mdp()
+        steps = torch.tensor([0, 25, 33, 41, 49, 58, 80])
+        time = steps * 0.02
+        angle = -2.0 * torch.pi * ((time - 0.5) / 0.65).clamp(0.0, 1.0)
+        gravity = torch.stack([angle.sin(), torch.zeros_like(angle), -angle.cos()], -1)
+        data = SimpleNamespace(
+            gravity_vec_w=torch.tensor([0.0, 0.0, -1.0]),
+            projected_gravity_b=gravity,
+        )
+        env = SimpleNamespace(
+            episode_length_buf=steps,
+            step_dt=0.02,
+            num_envs=len(steps),
+            device="cpu",
+            scene={"robot": SimpleNamespace(data=data)},
+        )
+        # A correct backflip trajectory must not receive an orientation penalty.
+        torch.testing.assert_close(
+            mdp.orientation_control(env), torch.zeros(len(steps))
+        )
+        data.projected_gravity_b = gravity.clone()
+        data.projected_gravity_b[:, 0] *= -1.0
+        self.assertGreater(float(mdp.orientation_control(env)[2:5].sum()), 4.0)
+
     def test_source_delayed_target_is_retained_across_episode_reset(self):
         import sys
 
@@ -121,9 +146,9 @@ class BackflipTests(unittest.TestCase):
             torch.tensor([1.0, 0.0]),
         )
 
-    def test_stance_width_zero_is_preserved_from_v16_source(self):
+    def test_nominal_stance_width_has_zero_lateral_error(self):
         mdp = load_mdp()
-        # The source uses 0.3 * zeros; its desired y positions are all zero.
+        # FL/FR/RL/RR are on the two sides of a 0.30 m support width.
         data = SimpleNamespace(
             root_link_pos_w=torch.zeros(1, 3),
             root_link_quat_w=torch.tensor([[1.0, 0.0, 0.0, 0.0]]),
@@ -146,7 +171,7 @@ class BackflipTests(unittest.TestCase):
             scene={"robot": SimpleNamespace(data=data)},
         )
         cfg = SimpleNamespace(name="robot", site_ids=[0, 1, 2, 3])
-        torch.testing.assert_close(mdp.feet_distance(env, cfg), torch.tensor([0.09]))
+        torch.testing.assert_close(mdp.feet_distance(env, cfg), torch.tensor([0.0]))
 
 
 if __name__ == "__main__":

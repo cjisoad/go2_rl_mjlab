@@ -12,6 +12,7 @@ from mjlab.managers import (
     SceneEntityCfg,
     TerminationTermCfg,
 )
+from mjlab.managers.metrics_manager import MetricsTermCfg
 from mjlab.sensor import ContactMatch, ContactSensorCfg
 from mjlab.utils.noise import UniformNoiseCfg
 
@@ -22,6 +23,7 @@ from src.tasks.velocity.config.go2.rl_cfg import unitree_go2_ppo_runner_cfg
 
 from . import mdp
 from .actions import DelayedJointPositionActionCfg
+from .evaluation import backflip_metric
 
 JOINT_NAMES = tuple(
     f"{leg}_{joint}_joint"
@@ -29,6 +31,10 @@ JOINT_NAMES = tuple(
     for joint in ("hip", "thigh", "calf")
 )
 JOINTS = SceneEntityCfg("robot", joint_names=JOINT_NAMES, preserve_order=True)
+FRONT_HIPS = SceneEntityCfg(
+    "robot", joint_names=("FR_hip_joint", "FL_hip_joint"), preserve_order=True
+)
+REAR_JOINTS = SceneEntityCfg("robot", joint_names=JOINT_NAMES[6:], preserve_order=True)
 FEET = SceneEntityCfg("robot", site_names=("FL", "FR", "RL", "RR"), preserve_order=True)
 FRONT_FEET = SceneEntityCfg("robot", site_names=("FL", "FR"), preserve_order=True)
 NONFOOT_SENSORS = ("base_contact",) + tuple(
@@ -152,7 +158,13 @@ def make_env_cfg(play=False):
     }
     cfg.commands = {}
     cfg.curriculum = {}
-    cfg.metrics = {}
+    cfg.metrics = {
+        f"backflip_{stage}_rate": MetricsTermCfg(
+            func=backflip_metric,
+            params={"stage": stage, "nonfoot_sensors": NONFOOT_SENSORS},
+        )
+        for stage in ("takeoff", "full_flip", "success")
+    }
     cfg.events = {
         "physics_material": EventTermCfg(
             func=dr.geom_friction,
@@ -212,14 +224,38 @@ def make_env_cfg(play=False):
         ),
         "crouch_base_height": reward("crouch_base_height", -6.0),
         "stance_foot_slip": reward(
-            "stance_foot_slip", -0.15, sensor_cfg="feet_contact", asset_cfg=FEET
+            "stance_foot_slip", -0.15, sensor_cfg="feet_contact", asset_cfg=FEET,
+            landing_start=mdp.LANDING_START,
         ),
         "launch_lin_vel_z": reward("launch_lin_vel_z", 8.0),
         "height_control": reward("height_control", -10.0, target_height=0.3),
-        "air_tuck_pose": reward("air_tuck_pose", -0.8, asset_cfg=JOINTS),
+        "air_tuck_pose": reward(
+            "air_tuck_pose",
+            -0.8,
+            asset_cfg=JOINTS,
+            hold_end=mdp.LANDING_PREP_START,
+            tuck_end=mdp.LANDING_START,
+        ),
+        "front_hip_landing_pose": reward(
+            "front_hip_landing_pose",
+            -4.0,
+            asset_cfg=FRONT_HIPS,
+            landing_start=mdp.LANDING_PREP_START,
+            landing_full=mdp.LANDING_START,
+        ),
+        "rear_leg_landing_pose": reward(
+            "rear_leg_landing_pose",
+            -1.0,
+            asset_cfg=REAR_JOINTS,
+            hip_error_weight=4.0,
+            landing_start=mdp.LANDING_PREP_START,
+            landing_full=mdp.LANDING_START,
+        ),
         "actions_symmetry": reward("actions_symmetry", -0.1),
         "gravity_y": reward("gravity_y", -4.0),
-        "feet_distance": reward("feet_distance", -1.0, asset_cfg=FEET),
+        "feet_distance": reward(
+            "feet_distance", -1.0, asset_cfg=FEET, stance_width=0.30
+        ),
         "prelaunch_nonfoot_contacts": reward(
             "prelaunch_nonfoot_contacts", -4.0, sensor_cfg=NONFOOT_SENSORS
         ),
@@ -239,13 +275,17 @@ def make_env_cfg(play=False):
         "undesired_contacts": reward(
             "undesired_contacts", -2.0, sensor_cfg=NONFOOT_SENSORS
         ),
-        "action_rate": reward("action_rate", -0.001),
+        # Effective coefficient: -0.001 before landing, -0.005 afterward.
+        "action_rate": reward(
+            "action_rate", -0.001, landing_start=mdp.LANDING_START, landing_scale=5.0
+        ),
     }
     cfg.terminations = {
         "time_out": TerminationTermCfg(func=env_mdp.time_out, time_out=True)
     }
-    cfg.decimation = 4
-    cfg.sim.mujoco.timestep = 0.005
+    # Update explicit PD torque at 400 Hz; keep policy control at 50 Hz.
+    cfg.decimation = 8
+    cfg.sim.mujoco.timestep = 0.0025
     cfg.sim.njmax = 1500
     cfg.sim.nconmax = 64
     cfg.sim.contact_sensor_maxmatch = 256

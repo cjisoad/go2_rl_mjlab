@@ -6,7 +6,7 @@
 
 ## 训练效果
 
-以下动图展示五个训练后策略的仿真效果：Flat、Rough、DreamWaQ、AMP 和 StandUp。
+以下动图展示六个训练后策略的仿真效果：Flat、Rough、DreamWaQ、AMP、StandUp 和 Backflip。
 
 ![Go2 policy demonstrations](docs/media/go2_demo_grid.gif)
 
@@ -113,6 +113,8 @@ python scripts/play.py Unitree-Go2-DreamWaQ \
 | 空格 / Enter / Esc | 暂停 / 重置 / 关闭 |
 
 松开按键后命令保持。Rough、DreamWaQ 和 Quad Pedipulation 在键盘模式下默认使用包含七类地形的小型长条地图；添加 `--play-terrain original` 可使用原始地图。后空翻策略自主执行动作，播放时省略 `--keyboard True`。详见 [键盘控制](docs/keyboard-control.md) 和 [长条测试地形](docs/play-strip.md)。
+
+空翻分阶段判定条件和成功率日志见 [空翻评估说明](docs/backflip-evaluation.md)。
 
 ## 致谢与许可证
 

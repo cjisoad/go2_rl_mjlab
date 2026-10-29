@@ -6,7 +6,7 @@ A reinforcement learning training repository for **Unitree Go2**, built on **mjl
 
 ## Training results
 
-Simulation rollouts of five trained policies: Flat, Rough, DreamWaQ, AMP and StandUp.
+Simulation rollouts of six trained policies: Flat, Rough, DreamWaQ, AMP, StandUp and Backflip.
 
 ![Go2 policy demonstrations](docs/media/go2_demo_grid.gif)
 
@@ -113,6 +113,8 @@ python scripts/play.py Unitree-Go2-DreamWaQ \
 | Space / Enter / Esc | Pause / reset / close |
 
 Velocity and foot commands persist after releasing a key. Keyboard playback of Rough, DreamWaQ and Quad Pedipulation uses a smaller strip containing seven terrain types by default. Use `--play-terrain original` for the original map. Backflip playback is autonomous: omit `--keyboard True`. More details: [keyboard controls](docs/keyboard-control.md), [terrain strip](docs/play-strip.md).
+
+Backflip outcome criteria and logged success rates: [evaluation details](docs/backflip-evaluation.md).
 
 ## Acknowledgements and license
 

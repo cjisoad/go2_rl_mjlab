@@ -1,19 +1,27 @@
 """Archived V1.6 backflip rewards, with mjlab state/contact access.
 
 Source: unitree_rl_lab, f36f6b9 + 2026-07-04_23-21-24 V1.6 recorded diff.
-The unusual zero desired stance width is preserved from that version.
+Landing targets restore nonzero stance width and rear-leg standing posture.
+The orientation target is corrected to match the negative-pitch progress target.
 """
 
 from __future__ import annotations
-import torch
+
 from typing import TYPE_CHECKING
+
+import torch
 
 if TYPE_CHECKING:
     from mjlab.entity import Entity
     from mjlab.envs import ManagerBasedRlEnv
 
-from mjlab.utils.lab_api import math as math_utils
 from mjlab.managers import SceneEntityCfg
+from mjlab.utils.lab_api import math as math_utils
+
+# Both targets describe the same negative-Y full turn.
+FLIP_START = 0.5
+LANDING_START = 1.15
+LANDING_PREP_START = 1.0
 
 
 def current_action(env: ManagerBasedRlEnv) -> torch.Tensor:
@@ -49,13 +57,16 @@ def _gravity_vec_w(asset: Entity, num_envs: int) -> torch.Tensor:
 
 
 def orientation_control(
-    env: ManagerBasedRlEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")
+    env: ManagerBasedRlEnv,
+    flip_start: float = FLIP_START,
+    landing_start: float = LANDING_START,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
 ) -> torch.Tensor:
     asset: Entity = env.scene[asset_cfg.name]
     current_time = env.episode_length_buf * env.step_dt
-    phase = (current_time - 0.5).clamp(min=0.0, max=0.5)
+    phase = ((current_time - flip_start) / (landing_start - flip_start)).clamp(0.0, 1.0)
     axis = torch.tensor([0.0, 1.0, 0.0], device=env.device)
-    quat_pitch = math_utils.quat_from_angle_axis(4.0 * phase * torch.pi, axis)
+    quat_pitch = math_utils.quat_from_angle_axis(-2.0 * torch.pi * phase, axis)
     desired_projected_gravity = math_utils.quat_apply_inverse(
         quat_pitch, _gravity_vec_w(asset, env.num_envs)
     )
@@ -75,8 +86,8 @@ def ang_vel_y(
 
 def pitch_progress(
     env: ManagerBasedRlEnv,
-    flip_start: float = 0.5,
-    landing_start: float = 1.15,
+    flip_start: float = FLIP_START,
+    landing_start: float = LANDING_START,
     target_rotation: float = 2.0 * torch.pi,
     std: float = 0.04,
     asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
@@ -152,7 +163,7 @@ def launch_lin_vel_z(
 
 def crouch_base_height(
     env: ManagerBasedRlEnv,
-    crouch_target_height: float = 0.24,
+    crouch_target_height: float = 0.28,
     stand_target_height: float = 0.3,
     crouch_end: float = 0.25,
     launch_end: float = 0.45,
@@ -186,12 +197,22 @@ def height_control(
     )
 
 
+def _landing_blend(
+    current_time: torch.Tensor,
+    start: float = LANDING_PREP_START,
+    end: float = LANDING_START,
+) -> torch.Tensor:
+    """Smoothstep handover: zero before preparation, one from landing onward."""
+    phase = ((current_time - start) / (end - start)).clamp(0.0, 1.0)
+    return phase.square() * (3.0 - 2.0 * phase)
+
+
 def air_tuck_pose(
     env: ManagerBasedRlEnv,
     tuck_start: float = 0.5,
     hold_start: float = 0.65,
-    hold_end: float = 1.0,
-    tuck_end: float = 1.15,
+    hold_end: float = LANDING_PREP_START,
+    tuck_end: float = LANDING_START,
     asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
 ) -> torch.Tensor:
     asset: Entity = env.scene[asset_cfg.name]
@@ -205,11 +226,46 @@ def air_tuck_pose(
     ramp_in = ((current_time - tuck_start) / (hold_start - tuck_start)).clamp(
         min=0.0, max=1.0
     )
-    ramp_out = ((tuck_end - current_time) / (tuck_end - hold_end)).clamp(
-        min=0.0, max=1.0
-    )
-    gate = torch.minimum(ramp_in, ramp_out)
+    # Complementary to the rear-leg landing ramp: no abrupt target switch.
+    ramp_out = 1.0 - _landing_blend(current_time, hold_end, tuck_end)
+    gate = ramp_in * ramp_out
     return pose_error * gate
+
+
+def front_hip_landing_pose(
+    env: ManagerBasedRlEnv,
+    asset_cfg: SceneEntityCfg,
+    landing_start: float = LANDING_PREP_START,
+    landing_full: float = LANDING_START,
+) -> torch.Tensor:
+    """Keep front hips near zero through landing while allowing leg reach."""
+    asset: Entity = env.scene[asset_cfg.name]
+    hip_error = asset.data.joint_pos[:, asset_cfg.joint_ids].square().sum(dim=1)
+    gate = _landing_blend(
+        env.episode_length_buf * env.step_dt, landing_start, landing_full
+    )
+    return hip_error * gate
+
+
+def rear_leg_landing_pose(
+    env: ManagerBasedRlEnv,
+    asset_cfg: SceneEntityCfg,
+    target_pose: tuple[float, ...] = (0.0, 1.0, -1.5, 0.0, 1.0, -1.5),
+    hip_error_weight: float = 4.0,
+    landing_start: float = LANDING_PREP_START,
+    landing_full: float = LANDING_START,
+) -> torch.Tensor:
+    """Recover RR/RL standing posture, emphasizing hip abduction control."""
+    asset: Entity = env.scene[asset_cfg.name]
+    joint_pos = asset.data.joint_pos[:, asset_cfg.joint_ids]
+    error = (joint_pos - joint_pos.new_tensor(target_pose)).square()
+    weights = joint_pos.new_tensor(
+        [hip_error_weight, 1.0, 1.0, hip_error_weight, 1.0, 1.0]
+    )
+    gate = _landing_blend(
+        env.episode_length_buf * env.step_dt, landing_start, landing_full
+    )
+    return (error * weights).sum(dim=1) * gate
 
 
 def actions_symmetry(env: ManagerBasedRlEnv) -> torch.Tensor:
@@ -232,7 +288,11 @@ def gravity_y(
     return torch.square(asset.data.projected_gravity_b[:, 1]) * active
 
 
-def feet_distance(env: ManagerBasedRlEnv, asset_cfg: SceneEntityCfg) -> torch.Tensor:
+def feet_distance(
+    env: ManagerBasedRlEnv,
+    asset_cfg: SceneEntityCfg,
+    stance_width: float = 0.30,
+) -> torch.Tensor:
     asset: Entity = env.scene[asset_cfg.name]
     current_time = env.episode_length_buf * env.step_dt
     foot_pos_translated = asset.data.site_pos_w[
@@ -242,16 +302,8 @@ def feet_distance(env: ManagerBasedRlEnv, asset_cfg: SceneEntityCfg) -> torch.Te
         -1, len(asset_cfg.site_ids), -1
     )
     foot_pos_b = math_utils.quat_apply_inverse(root_link_quat_w, foot_pos_translated)
-    stance_width = 0.3 * torch.zeros((env.num_envs, 1), device=env.device)
-    desired_ys = torch.cat(
-        [
-            stance_width / 2.0,
-            -stance_width / 2.0,
-            stance_width / 2.0,
-            -stance_width / 2.0,
-        ],
-        dim=1,
-    )
+    # Site order is FL, FR, RL, RR; width is the full left-to-right distance.
+    desired_ys = foot_pos_b.new_tensor([0.5, -0.5, 0.5, -0.5]) * stance_width
     stance_diff = torch.square(desired_ys - foot_pos_b[:, :, 1]).sum(dim=1)
     active = torch.logical_or(current_time < 0.5, current_time > 1.2)
     return stance_diff * active
@@ -354,10 +406,17 @@ def feet_height_before_backflip(
     return foot_height.clamp(min=0.0).sum(dim=1) * (current_time < 0.5)
 
 
-def action_rate(env: ManagerBasedRlEnv) -> torch.Tensor:
-    return torch.sum(
+def action_rate(
+    env: ManagerBasedRlEnv,
+    landing_start: float = LANDING_START,
+    landing_scale: float = 1.0,
+) -> torch.Tensor:
+    """Scale action-change cost after landing without slowing the flip."""
+    cost = torch.sum(
         torch.square(env.action_manager.prev_action - env.action_manager.action), dim=1
     )
+    landed_phase = env.episode_length_buf * env.step_dt >= landing_start
+    return cost * torch.where(landed_phase, landing_scale, 1.0)
 
 
 def _contact_any(env, sensor_cfg: str, threshold: float):
@@ -390,15 +449,22 @@ def prelaunch_nonfoot_contacts(env, sensor_cfg, threshold=1.0, contact_end=0.5):
     )
 
 
-def stance_foot_slip(env, sensor_cfg, asset_cfg, threshold=1.0, stance_end=0.45):
+def stance_foot_slip(
+    env, sensor_cfg, asset_cfg, threshold=1.0, stance_end=0.45,
+    landing_start=LANDING_START,
+):
     asset = env.scene[asset_cfg.name]
+    current_time = env.episode_length_buf * env.step_dt
+    foot_vel_w = asset.data.site_lin_vel_w[:, asset_cfg.site_ids, :2]
+    # Preserve archived prelaunch shaping and its contact-history semantics.
     contact = _contact_any(env, sensor_cfg, threshold)
-    vel = (
-        asset.data.site_lin_vel_w[:, asset_cfg.site_ids, :2]
-        - asset.data.root_link_lin_vel_w[:, None, :2]
-    )
-    return (vel.square().sum(-1) * contact).sum(1) * (
-        env.episode_length_buf * env.step_dt < stance_end
+    relative_vel = foot_vel_w - asset.data.root_link_lin_vel_w[:, None, :2]
+    prelaunch_cost = (relative_vel.square().sum(-1) * contact).sum(1)
+    # After landing, penalize actual ground slip only while a foot is touching.
+    current_contact = env.scene[sensor_cfg].data.force.norm(dim=-1) > threshold
+    landing_cost = (foot_vel_w.square().sum(-1) * current_contact).sum(1)
+    return prelaunch_cost * (current_time < stance_end) + landing_cost * (
+        current_time >= landing_start
     )
 
 
